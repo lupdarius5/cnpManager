@@ -7,7 +7,9 @@
 	public class ValidatorCnpApplication {
 
 		public static void main(String[] args) {
+
 			SpringApplication.run(ValidatorCnpApplication.class, args);
+			System.out.println("Hello World");
 		}
 
 	}
