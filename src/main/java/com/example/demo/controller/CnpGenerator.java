@@ -17,28 +17,15 @@ public  class CnpGenerator {
         String dayFormat=String.format("%02d", day);
         int county = rand.nextInt(52) + 1;
         String countyFormat=String.format("%02d", county);
-        String ctrl = String.format("%03d", rand.nextInt(1000));
-        String formatCNP = String.format("%d%s%s%s%s%s" , sex, yearFormat, monthFormat, dayFormat, countyFormat, ctrl);
-        String controlDigit = String.valueOf(calculateControl(formatCNP));
+        String numbers = String.format("%03d", rand.nextInt(1000));
+        int ctrl=rand.nextInt(9)+1;
+        String ctrlFormat=String.format("%d", ctrl);
+        String formatCNP = String.format("%d%s%s%s%s%s%s" , sex, yearFormat, monthFormat, dayFormat, countyFormat, numbers, ctrlFormat);
 
-        return formatCNP + controlDigit;
+        return formatCNP;
     }
 
-    private static int calculateControl(String formatCNP) {
-        int[] constant={2,7,9,1,4,6,3,5,8,2,7,9};
-        int sum=0;
 
-        for (int i = 0; i < 12; i++) {
-            sum += Character.getNumericValue(formatCNP.charAt(i)) * constant[i];
-        }
-
-        int control = sum % 11;
-        if (control == 10) {
-            control = 1;
-        }
-
-        return control;
-    }
 
 
 }

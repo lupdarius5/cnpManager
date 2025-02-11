@@ -24,7 +24,13 @@ public class Controller {
 
     @GetMapping("/generator")
     public String generateCode() {
-        return CnpGenerator.generateCNP();
-    }
+        if (ValidareCNP.esteValid(CnpGenerator.generateCNP())) {
+            return "Valid" + " " + CnpGenerator.generateCNP();
+        }
+        else {
+            return "Invalid" + " " + CnpGenerator.generateCNP();
+        }
 
+
+    }
 }
