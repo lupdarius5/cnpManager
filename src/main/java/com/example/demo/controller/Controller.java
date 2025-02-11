@@ -22,9 +22,9 @@ public class Controller {
         }
     }
 
-    @GetMapping("/generate")
-    public String generate() {
-        return GenereazaCNP.genereazaCNP();
+    @GetMapping("/generator")
+    public String generateCode() {
+        return CnpGenerator.generateCNP();
     }
 
 }
