@@ -1,7 +1,8 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.CnpEntity;
+import com.example.demo.repository.CnpRepository;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -9,28 +10,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class Controller {
 
-    @GetMapping("/users/{cnp}")
-    public String fetchUserById(@PathVariable(name = "cnp", required = true) String cnp) {
-        cnp = cnp.trim();
-        System.out.println("CNP primit: " + cnp);
-        System.out.println("Lungime: " + cnp.length());
+    private final CnpRepository cnpRepository;
 
-        if (ValidareCNP.esteValid(cnp)) {
-            return "Valid";
-        } else {
-            return "Invalid";
-        }
+    public Controller(CnpRepository cnpRepository) {
+        this.cnpRepository = cnpRepository;
     }
 
     @GetMapping("/generator")
-    public String generateCode() {
-        if (ValidareCNP.esteValid(CnpGenerator.generateCNP())) {
-            return "Valid" + " " + CnpGenerator.generateCNP();
-        }
-        else {
-            return "Invalid" + " " + CnpGenerator.generateCNP();
-        }
+    public String generateAndSaveCNP() {
+        String generatedCNP = CnpGenerator.generateCNP();
 
+        
+        CnpEntity newCnp = new CnpEntity(generatedCNP);
+        cnpRepository.save(newCnp);
 
+        return "CNP salvat în MongoDB: " + generatedCNP;
     }
 }
